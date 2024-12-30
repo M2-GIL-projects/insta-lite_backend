@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    container_name: instalite-app
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    networks:
+      - xml-network
+
+  db:
+    image: 'postgres:latest'
+    container_name: instalite-db
+    environment:
+      - 'POSTGRES_DB=instadatabase'
+      - 'POSTGRES_PASSWORD=secretinsta'
+      - 'POSTGRES_USER=userinsta'
+    ports:
+      - "5435:5432"
+    networks:
+      - xml-network
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus-instalite
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    networks:
+      - xml-network
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana-instalite
+    ports:
+      - "3000:3000"
+    depends_on:
+      - prometheus
+    networks:
+      - xml-network
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=instaSecret
+
+networks:
+  xml-network:

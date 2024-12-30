@@ -1,0 +1,8 @@
+global:
+  scrape_interval: 15s # Intervalle par défaut pour récupérer les métriques.
+
+scrape_configs:
+  - job_name: 'instalite_app' # Nom du job (arbitraire)
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['app:8080'] # Nom du service et port à scrapper (le nom "app" est celui défini dans le docker-compose)
