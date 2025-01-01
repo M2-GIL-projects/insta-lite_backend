@@ -1,28 +1,21 @@
 package fr.univrouen.instalite.services;
 
-import fr.univrouen.instalite.model.User;
-import fr.univrouen.instalite.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import fr.univrouen.instalite.entities.User;
+import fr.univrouen.instalite.repositories.UserRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class UserService {
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private final BCryptPasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
 
-    public UserService(BCryptPasswordEncoder passwordEncoder) {
-        this.passwordEncoder = passwordEncoder;
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
-    public User registerUser(User user) {
-        if (userRepository.existsByUsername(user.getUsername())) {
-            throw new RuntimeException("L'utilisateur existe déjà");
-        }
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userRepository.save(user);
+    public List<User> allUsers() {
+        return new ArrayList<>(userRepository.findAll());
     }
 }
-
