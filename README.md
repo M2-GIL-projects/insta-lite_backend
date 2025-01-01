@@ -2,6 +2,8 @@
 
 Insta-lite est une application de portfolio permettant de partager des images et vidéos. Ce projet vise à fournir une plateforme conviviale pour les utilisateurs souhaitant accéder à du contenu visuel, ainsi qu'un espace d'administration pour gérer ce contenu.
 
+**Remarque: Vous trouverez la collection postman sur le dossier Documentation**
+
 ---
 
 ## Installation et exécution
