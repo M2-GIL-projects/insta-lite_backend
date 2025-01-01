@@ -22,12 +22,13 @@ Insta-lite est une application de portfolio permettant de partager des images et
 ### Authentification
 
 - POST /auth/login : Authentification des utilisateurs.
+- POST /auth/signup : Inscription des utilisateurs.
 - POST /auth/logout : Déconnexion des utilisateurs.
 
 ### Gestion des utilisateurs
 
-- GET /users : Liste des utilisateurs.
-- POST /users : Création d'un utilisateur.
+- GET /users/ : Liste des utilisateurs.
+- GET /users/me : Utilisateur actif
 - PUT /users/{id} : Mise à jour des informations utilisateur.
 - DELETE /users/{id} : Suppression d'un utilisateur.
 
