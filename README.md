@@ -4,6 +4,10 @@ Insta-lite est une application de portfolio permettant de partager des images et
 
 **Remarque: Vous trouverez la collection postman sur le dossier Documentation**
 
+Email ADMIN: ```admin@instalite.fr```
+
+MDP ADMIN: ```UtoPique#LIG5202```
+
 ---
 
 ## Installation et exécution

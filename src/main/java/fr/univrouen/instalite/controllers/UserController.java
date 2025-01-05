@@ -20,6 +20,11 @@ public class UserController {
         this.userService = userService;
     }
 
+    @GetMapping("/portfolio")
+    public String getPortfolio() {
+        return "InstaLite 1.0";
+    }
+
     @GetMapping("/me")
     public ResponseEntity<User> authenticatedUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -29,7 +34,7 @@ public class UserController {
         return ResponseEntity.ok(currentUser);
     }
 
-    @GetMapping("/")
+    @GetMapping("/list")
     public ResponseEntity<List<User>> allUsers() {
         List <User> users = userService.allUsers();
 
