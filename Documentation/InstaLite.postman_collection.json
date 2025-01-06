@@ -65,6 +65,63 @@
 			"response": []
 		},
 		{
+			"name": "Login Admin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"admin@instalite.fr\",\n    \"password\": \"UtoPique#LIG5202\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/auth/login",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"auth",
+						"login"
+					]
+				},
+				"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+			},
+			"response": []
+		},
+		{
 			"name": "Acceuil",
 			"request": {
 				"auth": {
@@ -72,7 +129,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huLmRvZUBnbWFpbC5jb20iLCJpYXQiOjE3MzU3NjI1MDksImV4cCI6MTczNTc2NjEwOX0.SBzozO2-NnwD7_56ykvbNAPyIzHtpkM88Fjaj9CWkfw",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBpbnN0YWxpdGUuZnIiLCJpYXQiOjE3MzYwOTgzODksImV4cCI6MTczNjEwMTk4OX0.Sk9mnSCtSp6afZYAcsQAgic_GsYKePykvx2o_7PqjBc",
 							"type": "string"
 						}
 					]
@@ -154,7 +211,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huLmRvZUBnbWFpbC5jb20iLCJpYXQiOjE3MzU3NjA0NTIsImV4cCI6MTczNTc2NDA1Mn0.S17zzUFjT7x5bmGtQbAbR-c9JI5x_PaLbxf3CklQMik",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBpbnN0YWxpdGUuZnIiLCJpYXQiOjE3MzYwOTgzODksImV4cCI6MTczNjEwMTk4OX0.Sk9mnSCtSp6afZYAcsQAgic_GsYKePykvx2o_7PqjBc",
 							"type": "string"
 						}
 					]
@@ -162,13 +219,12 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{base_url}}/users/",
+					"raw": "{{base_url}}/users",
 					"host": [
 						"{{base_url}}"
 					],
 					"path": [
-						"users",
-						""
+						"users"
 					]
 				}
 			},
@@ -182,7 +238,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huLmRvZUBnbWFpbC5jb20iLCJpYXQiOjE3MzU3NjA0NTIsImV4cCI6MTczNTc2NDA1Mn0.S17zzUFjT7x5bmGtQbAbR-c9JI5x_PaLbxf3CklQMik",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huLmRvZUBnbWFpbC5jb20iLCJpYXQiOjE3MzYxMTYzNzIsImV4cCI6MTczNjExOTk3Mn0.gffur39WC28qlIbn1QhE-NGmV-UdirMa9gDwxtbMYnY",
 							"type": "string"
 						}
 					]
@@ -197,6 +253,154 @@
 					"path": [
 						"users",
 						"me"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Posts",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huLmRvZUBnbWFpbC5jb20iLCJpYXQiOjE3MzYxMTk4MTksImV4cCI6MTczNjEyMzQxOX0.EpijCgUuDvoBc5PPEedru93_pWyH5O1Gi2m-L1YIVvs",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/posts",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"posts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Creation de Post",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huLmRvZUBnbWFpbC5jb20iLCJpYXQiOjE3MzYxMTk4MTksImV4cCI6MTczNjEyMzQxOX0.EpijCgUuDvoBc5PPEedru93_pWyH5O1Gi2m-L1YIVvs",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"content\": \"Voici une description de mon post.\",\n  \"isPrivate\": false\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/posts",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"posts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post d'un User",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huLmRvZUBnbWFpbC5jb20iLCJpYXQiOjE3MzYxMTk4MTksImV4cCI6MTczNjEyMzQxOX0.EpijCgUuDvoBc5PPEedru93_pWyH5O1Gi2m-L1YIVvs",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/posts/user/2",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"posts",
+						"user",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Post",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huLmRvZUBnbWFpbC5jb20iLCJpYXQiOjE3MzYxMTk4MTksImV4cCI6MTczNjEyMzQxOX0.EpijCgUuDvoBc5PPEedru93_pWyH5O1Gi2m-L1YIVvs",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/posts/1",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"posts",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Suppression de Post",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huLmRvZUBnbWFpbC5jb20iLCJpYXQiOjE3MzYxMTk4MTksImV4cCI6MTczNjEyMzQxOX0.EpijCgUuDvoBc5PPEedru93_pWyH5O1Gi2m-L1YIVvs",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/posts/3",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"posts",
+						"3"
 					]
 				}
 			},
