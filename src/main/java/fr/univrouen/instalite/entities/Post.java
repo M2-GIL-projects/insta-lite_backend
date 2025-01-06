@@ -1,5 +1,6 @@
 package fr.univrouen.instalite.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -25,6 +26,7 @@ public class Post {
     private List<Picture> pictures = new ArrayList<>();
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<Video> videos = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
