@@ -22,6 +22,9 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String fullName;
 
+    @Column(nullable = true)
+    private String pseudo;
+
     @Column(nullable = false)
     private String password;
 
@@ -30,6 +33,9 @@ public class User implements UserDetails {
 
     @Column(nullable = false)
     private String role;
+
+    @Column(nullable = true)
+    private String profileImg;
 
     @CreationTimestamp
     @Column(updatable = false, name = "created_at")
@@ -104,6 +110,14 @@ public class User implements UserDetails {
         return this;
     }
 
+    public String getPseudo() {
+        return pseudo;
+    }
+
+    public void setPseudo(String pseudo) {
+        this.pseudo = pseudo;
+    }
+
     public String getRole() {
         return role;
     }
@@ -111,6 +125,10 @@ public class User implements UserDetails {
     public User setRole(String role) {
         this.role = role;
         return this;
+    }
+
+    public String getFullName() {
+        return fullName;
     }
 
     public User setFullName(String fullName) {
@@ -122,4 +140,13 @@ public class User implements UserDetails {
         this.password = password;
         return this;
     }
+
+    public String getProfileImg() {
+        return profileImg;
+    }
+
+    public void setProfileImg(String profileImg) {
+        this.profileImg = profileImg;
+    }
+
 }

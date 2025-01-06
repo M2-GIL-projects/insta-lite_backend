@@ -1,9 +1,6 @@
 package fr.univrouen.instalite.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class Picture {
@@ -16,6 +13,10 @@ public class Picture {
     private String url;
 
     private boolean isPrivate;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "post_id", nullable = false)
+    private Post post;
 
     public Long getId() {
         return id;
