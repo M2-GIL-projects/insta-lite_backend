@@ -36,6 +36,11 @@ public class GlobalExceptionHandler {
             errorDetail.setProperty("description", "Vous n'êtes pas autorisé à accéder à cette ressource");
         }
 
+        if (exception instanceof SecurityException) {
+            errorDetail = ProblemDetail.forStatusAndDetail(HttpStatusCode.valueOf(403), exception.getMessage());
+            errorDetail.setProperty("description", "Vous n'êtes pas autorisé à réaliser cette action");
+        }
+
         if (exception instanceof SignatureException) {
             errorDetail = ProblemDetail.forStatusAndDetail(HttpStatusCode.valueOf(403), exception.getMessage());
             errorDetail.setProperty("description", "La signature du JWT est invalide");
@@ -44,6 +49,11 @@ public class GlobalExceptionHandler {
         if (exception instanceof ExpiredJwtException) {
             errorDetail = ProblemDetail.forStatusAndDetail(HttpStatusCode.valueOf(403), exception.getMessage());
             errorDetail.setProperty("description", "Le jeton JWT a expiré");
+        }
+
+        if (exception instanceof ResourceNotFoundException) {
+            errorDetail = ProblemDetail.forStatusAndDetail(HttpStatusCode.valueOf(404), exception.getMessage());
+            errorDetail.setProperty("description", "Ressource non trouvée");
         }
 
         if (errorDetail == null) {
