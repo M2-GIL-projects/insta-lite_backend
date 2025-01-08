@@ -18,7 +18,7 @@ public class PostController {
 
     @PostMapping
     public ResponseEntity<Post> createPost(@RequestBody Post post) {
-        Post createdPost = postService.createPost(post); // Si une exception SecurityException se produit, elle sera capturée globalement.
+        Post createdPost = postService.createPost(post);
         return ResponseEntity.ok(createdPost);
     }
 

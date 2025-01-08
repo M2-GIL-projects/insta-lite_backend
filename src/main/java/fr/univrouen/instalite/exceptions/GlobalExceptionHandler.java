@@ -7,8 +7,12 @@ import org.springframework.http.ProblemDetail;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AccountStatusException;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -56,9 +60,21 @@ public class GlobalExceptionHandler {
             errorDetail.setProperty("description", "Ressource non trouvée");
         }
 
+        if (exception instanceof MethodArgumentNotValidException validationException) {
+            Map<String, String> validationErrors = new HashMap<>();
+            validationException.getBindingResult().getFieldErrors().forEach(error -> {
+                validationErrors.put(error.getField(), error.getDefaultMessage());
+            });
+
+            errorDetail = ProblemDetail.forStatusAndDetail(HttpStatusCode.valueOf(400), "Erreur de validation des champs");
+            errorDetail.setProperty("description", "Certains champs ne respectent pas les contraintes de validation");
+            errorDetail.setProperty("validationErrors", validationErrors);
+            return errorDetail;
+        }
+
         if (errorDetail == null) {
             errorDetail = ProblemDetail.forStatusAndDetail(HttpStatusCode.valueOf(500), exception.getMessage());
-            errorDetail.setProperty("description", "Unknown internal server error.");
+            errorDetail.setProperty("description", "Erreur interne du serveur (inconnu).");
         }
 
         return errorDetail;

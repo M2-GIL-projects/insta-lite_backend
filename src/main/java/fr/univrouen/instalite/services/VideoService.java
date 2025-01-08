@@ -34,7 +34,7 @@ public class VideoService {
 
     public boolean deleteFile(String path,Long id){
         boolean deleted = storageUtil.deleteFile(path);
-        if(deleted){
+        if(deleted && videoRepository.existsById(id)){
             videoRepository.deleteById(id);
             return true;
         }

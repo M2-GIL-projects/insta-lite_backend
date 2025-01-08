@@ -5,7 +5,7 @@ public class RegisterUser {
 
     private String password;
 
-    private String fullName;
+    private String pseudo;
 
     public String getEmail() {
         return email;
@@ -23,11 +23,12 @@ public class RegisterUser {
         this.password = password;
     }
 
-    public String getFullName() {
-        return fullName;
+
+    public String getPseudo() {
+        return pseudo;
     }
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
+    public void setPseudo(String pseudo) {
+        this.pseudo = pseudo;
     }
 }
