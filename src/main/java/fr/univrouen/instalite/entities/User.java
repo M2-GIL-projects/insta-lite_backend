@@ -28,13 +28,10 @@ public class User implements UserDetails {
     @Column(nullable = true)
     private String pseudo;
 
-    @NotBlank(message = "Le mot de passe ne peut pas être vide.")
     @Column(nullable = false)
     @JsonIgnore
     private String password;
 
-    @NotBlank(message = "L'email ne peut pas être vide.")
-    @Email(message = "L'email doit être dans un format valide.")
     @Column(unique = true, length = 100, nullable = false)
     private String email;
 
