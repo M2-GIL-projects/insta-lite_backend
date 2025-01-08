@@ -9,6 +9,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -19,7 +20,6 @@ public class PostService {
 
     public Post createPost(Post post) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
         if (authentication == null || !authentication.isAuthenticated()) {
             throw new SecurityException("Vous devez être connecté pour créer un post.");
         }
@@ -47,20 +47,34 @@ public class PostService {
     }
 
     public boolean deletePost(Long postId) {
-        if (postRepository.existsById(postId)) {
-            postRepository.deleteById(postId);
-            return true;
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || !authentication.isAuthenticated()) {
+            throw new SecurityException("Vous devez être connecté pour supprimer un post.");
+        }
+        else {
+            if (postRepository.existsById(postId)) {
+                postRepository.deleteById(postId);
+                return true;
+            }
         }
         return false;
     }
 
     public Optional<Post> updatePost(Long postId, Post updatedPost) {
         Optional<Post> existingPost = postRepository.findById(postId);
-        if (existingPost.isPresent()) {
-            Post post = existingPost.get();
-            post.setContent(updatedPost.getContent());
-            post.setPrivate(updatedPost.isPrivate());
-            return Optional.of(postRepository.save(post));
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || !authentication.isAuthenticated()) {
+            throw new SecurityException("Vous devez être connecté pour modifier un post.");
+        }else{
+            User currentUser = (User) authentication.getPrincipal();
+            if (existingPost.isPresent()) {
+                Post post = existingPost.get();
+                if(Objects.equals(currentUser.getEmail(), post.getUser().getEmail())){
+                    post.setContent(updatedPost.getContent());
+                    post.setPrivate(updatedPost.isPrivate());
+                    return Optional.of(postRepository.save(post));
+                }
+            }
         }
         return Optional.empty();
     }

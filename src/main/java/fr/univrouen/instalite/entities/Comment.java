@@ -1,6 +1,11 @@
 package fr.univrouen.instalite.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.util.Date;
 
 @Entity
 @Table(name = "comments")
@@ -11,18 +16,21 @@ public class Comment {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id", nullable = false)
+    @JsonBackReference
     private Post post;
 
     @Column(nullable = false)
     private String content;
 
-    @Column(name = "created_at", nullable = false)
-    private Long createdAt;
+    @CreationTimestamp
+    @Column(updatable = false, name = "created_at")
+    private Date createdAt;
 
     // Constructeurs, Getters, Setters
     public Comment() {}
@@ -31,7 +39,6 @@ public class Comment {
         this.user = user;
         this.post = post;
         this.content = content;
-        this.createdAt = System.currentTimeMillis();
     }
 
     // Getters et Setters
@@ -67,11 +74,11 @@ public class Comment {
         this.content = content;
     }
 
-    public Long getCreatedAt() {
+    public Date getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Long createdAt) {
+    public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
 }

@@ -1,6 +1,9 @@
 package fr.univrouen.instalite.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
@@ -19,15 +22,19 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String fullName;
 
     @Column(nullable = true)
     private String pseudo;
 
+    @NotBlank(message = "Le mot de passe ne peut pas être vide.")
     @Column(nullable = false)
+    @JsonIgnore
     private String password;
 
+    @NotBlank(message = "L'email ne peut pas être vide.")
+    @Email(message = "L'email doit être dans un format valide.")
     @Column(unique = true, length = 100, nullable = false)
     private String email;
 
@@ -49,10 +56,19 @@ public class User implements UserDetails {
 
     public User() {}
 
-    public User(String fullName, String password, String email, String role) {
+    public User(String pseudo, String password, String email, String role) {
+        this.pseudo = pseudo;
+        this.password = password;
+        this.email = email;
+        this.role = role;
+    }
+
+
+    public User(String fullName, String password, String email, String pseudo, String role) {
         this.fullName = fullName;
         this.password = password;
         this.email = email;
+        this.pseudo = pseudo;
         this.role = role;
     }
 
@@ -114,8 +130,9 @@ public class User implements UserDetails {
         return pseudo;
     }
 
-    public void setPseudo(String pseudo) {
+    public User setPseudo(String pseudo) {
         this.pseudo = pseudo;
+        return this;
     }
 
     public String getRole() {

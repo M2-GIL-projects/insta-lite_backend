@@ -6,6 +6,7 @@ import fr.univrouen.instalite.dto.RegisterUser;
 import fr.univrouen.instalite.entities.User;
 import fr.univrouen.instalite.services.AuthenticationService;
 import fr.univrouen.instalite.services.JwtService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,14 +23,14 @@ public class AuthenticationController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<User> register(@RequestBody RegisterUser registerUser) {
+    public ResponseEntity<User> register(@Valid @RequestBody RegisterUser registerUser) {
         User registeredUser = authenticationService.signup(registerUser);
 
         return ResponseEntity.ok(registeredUser);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> authenticate(@RequestBody LoginUser loginUser) {
+    public ResponseEntity<LoginResponse> authenticate(@Valid @RequestBody LoginUser loginUser) {
         User authenticatedUser = authenticationService.authenticate(loginUser);
 
         String jwtToken = jwtService.generateToken(authenticatedUser);
