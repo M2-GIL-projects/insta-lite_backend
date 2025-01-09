@@ -82,19 +82,19 @@ public class AdminController {
         return ResponseEntity.ok(postService.getAllPosts());
     }
 
-    @GetMapping("/users/{userId}")
+    @GetMapping("/posts/{userId}")
     public ResponseEntity<List<Post>> getPostsByUser(@PathVariable Long userId) {
         return ResponseEntity.ok(postService.getPostsByUser(userId));
     }
 
-    @GetMapping("users/{postId}")
+    @GetMapping("/posts/{postId}")
     public ResponseEntity<?> getPostById(@PathVariable Long postId) {
         Optional<Post> post = postService.getPostById(postId);
         return post.map(ResponseEntity::ok)
                 .orElseThrow(() -> new ResourceNotFoundException("Le post avec l'ID " + postId + " n'a pas été trouvé."));
     }
 
-    @DeleteMapping("users/{postId}")
+    @DeleteMapping("/posts/{postId}")
     public ResponseEntity<?> deletePost(@PathVariable Long postId) {
         boolean deleted = postService.deletePost(postId);
         if (deleted) {
@@ -104,7 +104,7 @@ public class AdminController {
         }
     }
 
-    @PutMapping("users/{postId}")
+    @PutMapping("/posts/{postId}")
     public ResponseEntity<?> updatePost(@PathVariable Long postId, @RequestBody Post updatedPost) {
         Optional<Post> updated = postService.updatePost(postId, updatedPost);
         return updated.map(ResponseEntity::ok)

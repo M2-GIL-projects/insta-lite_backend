@@ -11,6 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequestMapping("/users")
 @RestController
@@ -30,6 +31,11 @@ public class UserController {
         User currentUser = (User) authentication.getPrincipal();
 
         return ResponseEntity.ok(currentUser);
+    }
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getUser(@PathVariable Long id){
+        Optional<User> user = userService.getUserById(id);
+        return ResponseEntity.ok(user);
     }
 
     @GetMapping("/me/portfolio")

@@ -129,7 +129,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huLmRvZUBnbWFpbC5jb20iLCJpYXQiOjE3MzYyOTY5OTgsImV4cCI6MTczNjMwMDU5OH0.mA2bLpE6XmYssJjE2f5hQQiD8ZILPawueilaIFj6-SM",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huLmRvZUBnbWFpbC5jb20iLCJpYXQiOjE3MzYzODU3MTQsImV4cCI6MTczNjM4OTMxNH0.KDnnTpEuGyFosYAjEGlJTooTFKTA6FPjQwZQPJ_LTK0",
 							"type": "string"
 						}
 					]
@@ -143,6 +143,34 @@
 					],
 					"path": [
 						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Acceuil Admin",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBpbnN0YWxpdGUuZnIiLCJpYXQiOjE3MzY0NTI3MDAsImV4cCI6MTczNjQ1NjMwMH0.QSpBDoi7EyrdiJzwWB6TNz3_GAg2bjvLJ5MAaD_bqNE",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/admin/dashboard",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"admin",
+						"dashboard"
 					]
 				}
 			},
@@ -376,7 +404,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huLmRvZUBnbWFpbC5jb20iLCJpYXQiOjE3MzYzMDM5MzIsImV4cCI6MTczNjMwNzUzMn0.wihLm0WgEAWXKNJQjHWYEsN3XiE-66xokKgD_cJPGcs",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huLmRvZUBnbWFpbC5jb20iLCJpYXQiOjE3MzYzODE0NzcsImV4cCI6MTczNjM4NTA3N30.-ZirGGhhWYyiMAThL3uLFEo0gDX3Gx_X41aw-QT1KZY",
 							"type": "string"
 						}
 					]
@@ -412,7 +440,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huLmRvZUBnbWFpbC5jb20iLCJpYXQiOjE3MzYzMDM5MzIsImV4cCI6MTczNjMwNzUzMn0.wihLm0WgEAWXKNJQjHWYEsN3XiE-66xokKgD_cJPGcs",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huLmRvZUBnbWFpbC5jb20iLCJpYXQiOjE3MzYzODE0NzcsImV4cCI6MTczNjM4NTA3N30.-ZirGGhhWYyiMAThL3uLFEo0gDX3Gx_X41aw-QT1KZY",
 							"type": "string"
 						}
 					]
@@ -421,7 +449,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"content\": \"Ma story life.\",\n  \"isPrivate\": true\n}",
+					"raw": "{\n  \"content\": \"Ma story life.\",\n  \"private\": true\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -448,7 +476,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huLmRvZUBnbWFpbC5jb20iLCJpYXQiOjE3MzYxODcyNzEsImV4cCI6MTczNjE5MDg3MX0.nkII20D9A04Gg_jaoMcPFI8XYzKtmZ81bHrT683bZeM",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huLmRvZUBnbWFpbC5jb20iLCJpYXQiOjE3MzYzODU3MTQsImV4cCI6MTczNjM4OTMxNH0.KDnnTpEuGyFosYAjEGlJTooTFKTA6FPjQwZQPJ_LTK0",
 							"type": "string"
 						}
 					]
@@ -625,6 +653,104 @@
 						"posts",
 						"videos",
 						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Image",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huLmRvZUBnbWFpbC5jb20iLCJpYXQiOjE3MzYzODU3MTQsImV4cCI6MTczNjM4OTMxNH0.KDnnTpEuGyFosYAjEGlJTooTFKTA6FPjQwZQPJ_LTK0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/home/michel/Téléchargements/alexander-zaytsev-37PDEbTnT34-unsplash.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/posts/pictures/upload/1",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"posts",
+						"pictures",
+						"upload",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Image",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huLmRvZUBnbWFpbC5jb20iLCJpYXQiOjE3MzYzODU3MTQsImV4cCI6MTczNjM4OTMxNH0.KDnnTpEuGyFosYAjEGlJTooTFKTA6FPjQwZQPJ_LTK0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/posts/pictures/1",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"posts",
+						"pictures",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Image",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huLmRvZUBnbWFpbC5jb20iLCJpYXQiOjE3MzYzODU3MTQsImV4cCI6MTczNjM4OTMxNH0.KDnnTpEuGyFosYAjEGlJTooTFKTA6FPjQwZQPJ_LTK0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/posts/pictures/1",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"posts",
+						"pictures",
+						"1"
 					]
 				}
 			},

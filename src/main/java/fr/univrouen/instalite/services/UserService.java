@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -26,6 +27,8 @@ public class UserService {
     public List<User> allUsers() {
         return new ArrayList<>(userRepository.findAll());
     }
+
+    public Optional<User> getUserById(Long id){return userRepository.findById(id);}
 
     public long countUsers() {
         return userRepository.count();
