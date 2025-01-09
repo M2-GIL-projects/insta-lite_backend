@@ -2,6 +2,9 @@ package fr.univrouen.instalite.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.util.Date;
 
 @Entity
 public class Picture {
@@ -9,16 +12,20 @@ public class Picture {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String title;
-
+    @Column(nullable = false)
     private String url;
 
-    private boolean isPrivate;
+    @Column(nullable = true)
+    private String extension;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id", nullable = false)
     @JsonBackReference
     private Post post;
+
+    @CreationTimestamp
+    @Column(updatable = false, name = "created_at")
+    private Date createdAt;
 
     public Long getId() {
         return id;
@@ -26,14 +33,6 @@ public class Picture {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     public String getUrl() {
@@ -44,12 +43,20 @@ public class Picture {
         this.url = url;
     }
 
-    public boolean isPrivate() {
-        return isPrivate;
+    public String getExtension() {
+        return extension;
     }
 
-    public void setPrivate(boolean isPrivate) {
-        this.isPrivate = isPrivate;
+    public void setExtension(String extension) {
+        this.extension = extension;
+    }
+
+    public Post getPost() {
+        return post;
+    }
+
+    public void setPost(Post post) {
+        this.post = post;
     }
 
 }

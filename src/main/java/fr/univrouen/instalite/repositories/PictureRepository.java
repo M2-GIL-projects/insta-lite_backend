@@ -9,5 +9,4 @@ import fr.univrouen.instalite.entities.Picture;
 
 @Repository
 public interface PictureRepository extends JpaRepository<Picture, Long> {
-    List<Picture> findByIsPrivate(boolean isPrivate);
 }
