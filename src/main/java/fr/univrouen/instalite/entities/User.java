@@ -2,8 +2,6 @@ package fr.univrouen.instalite.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
@@ -39,7 +37,13 @@ public class User implements UserDetails {
     private String role;
 
     @Column(nullable = true)
-    private String profileImg;
+    private String photo;
+
+    @Column(nullable = true)
+    private String tel;
+
+    @Column(nullable = true)
+    private String bio;
 
     @CreationTimestamp
     @Column(updatable = false, name = "created_at")
@@ -155,12 +159,28 @@ public class User implements UserDetails {
         return this;
     }
 
-    public String getProfileImg() {
-        return profileImg;
+    public String getPhoto() {
+        return photo;
     }
 
-    public void setProfileImg(String profileImg) {
-        this.profileImg = profileImg;
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+
+    public String getTel() {
+        return tel;
+    }
+
+    public void setTel(String tel) {
+        this.tel = tel;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
     }
 
 }

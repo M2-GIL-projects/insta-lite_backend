@@ -23,6 +23,9 @@ public class Video {
     @Column(nullable = true)
     private String extension;
 
+    @Column(nullable = true)
+    private boolean isPrivate;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id", nullable = false)
     @JsonBackReference
@@ -72,6 +75,10 @@ public class Video {
     public void setExtension(String extension) {
         this.extension = extension;
     }
+
+    public boolean isPrivate() {return isPrivate;}
+
+    public void setPrivate(boolean aPrivate) {isPrivate = aPrivate;}
 
     public Post getPost() {
         return post;

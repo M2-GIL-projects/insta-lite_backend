@@ -6,7 +6,6 @@ import fr.univrouen.instalite.dto.RegisterUser;
 import fr.univrouen.instalite.entities.User;
 import fr.univrouen.instalite.services.AuthenticationService;
 import fr.univrouen.instalite.services.JwtService;
-import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
