@@ -15,19 +15,19 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 @Service
-public class VideoStorageUtil {
+public class MediaStorageUtil {
 
     @Value("${app.upload.dir}")
     private String uploadDir;
 
-    public String createFile(MultipartFile file) throws IOException {
+    public String createVideo(MultipartFile file) throws IOException {
         String dirPath = uploadDir + File.separator +
                 "Videos" + File.separator +
                 LocalDate.now();
 
         String fileName = String.format(
                 "%s.%s",
-                UUID.randomUUID().toString(),
+                UUID.randomUUID(),
                 FilenameUtils.getExtension(file.getOriginalFilename())
         );
 
@@ -40,6 +40,28 @@ public class VideoStorageUtil {
         Files.write(filePath, file.getBytes());
         return filePath.toString();
     }
+
+    public String createPicture(MultipartFile file) throws IOException {
+        String dirPath = uploadDir + File.separator +
+                "Pictures" + File.separator +
+                LocalDate.now();
+
+        String fileName = String.format(
+                "%s.%s",
+                UUID.randomUUID(),
+                FilenameUtils.getExtension(file.getOriginalFilename())
+        );
+
+        Path directory = Paths.get(dirPath);
+        if (!Files.exists(directory)) {
+            Files.createDirectories(directory);
+        }
+
+        Path filePath = directory.resolve(fileName);
+        Files.write(filePath, file.getBytes());
+        return filePath.toString();
+    }
+
 
     public byte[] getFile(String path) throws IOException {
         File file = new File(path);
