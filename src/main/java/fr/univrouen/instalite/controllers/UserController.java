@@ -32,6 +32,7 @@ public class UserController {
 
         return ResponseEntity.ok(currentUser);
     }
+
     @GetMapping("/{id}")
     public ResponseEntity<?> getUser(@PathVariable Long id){
         Optional<User> user = userService.getUserById(id);

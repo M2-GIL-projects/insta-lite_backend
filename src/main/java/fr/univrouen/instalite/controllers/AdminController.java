@@ -57,6 +57,12 @@ public class AdminController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
     }
 
+    @GetMapping("/users/{id}")
+    public ResponseEntity<?> getUser(@PathVariable Long id){
+        Optional<User> user = userService.getUserById(id);
+        return ResponseEntity.ok(user);
+    }
+
     @PutMapping("/users/{id}")
     public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User userDetails) {
         User updatedUser = userService.updateUser(id, userDetails);
