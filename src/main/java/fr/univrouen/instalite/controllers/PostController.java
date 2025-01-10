@@ -22,10 +22,10 @@ public class PostController {
         return ResponseEntity.ok(createdPost);
     }
 
-    @GetMapping
-    public ResponseEntity<List<Post>> getAllPosts() {
-        return ResponseEntity.ok(postService.getAllPosts());
-    }
+//    @GetMapping
+//    public ResponseEntity<List<Post>> getAllPosts() {
+//        return ResponseEntity.ok(postService.getAllPosts());
+//    }
 
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<Post>> getPostsByUser(@PathVariable Long userId) {

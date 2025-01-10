@@ -44,7 +44,7 @@ public class UserController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         User currentUser = (User) authentication.getPrincipal();
-        return postService.getPostsByUser(currentUser.getId());
+        return postService.getmyPosts(currentUser.getId());
     }
 
     @GetMapping
