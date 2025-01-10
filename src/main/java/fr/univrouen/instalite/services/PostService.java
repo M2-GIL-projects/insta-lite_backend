@@ -34,8 +34,35 @@ public class PostService {
         return postRepository.findAll();
     }
 
-    public List<Post> getPostsByUser(Long userId) {
+    public List<Post> getmyPosts(Long userId) {
         return postRepository.findByUserId(userId);
+    }
+
+    public List<Post> getPostsByUser(Long userId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return postRepository.findByIsPrivateAndUserId(false, userId);
+        }
+        if (authentication.getAuthorities().stream().anyMatch(auth -> auth.getAuthority().equals("ROLE_USER"))) {
+            return postRepository.findByIsPrivateAndUserId(false, userId);
+        }else if(authentication.getAuthorities().stream().anyMatch(auth -> auth.getAuthority().equals("ROLE_PRIVILEGED_USER")) ||
+                authentication.getAuthorities().stream().anyMatch(auth -> auth.getAuthority().equals("ROLE_ADMIN"))){
+            return postRepository.findByUserId(userId);
+        }else{
+            return postRepository.findByIsPrivateAndUserId(false, userId);
+        }
+    }
+
+    public List<Post> getPostsByRole() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return postRepository.findByIsPrivate(false);
+        }
+        if (authentication.getAuthorities().stream().anyMatch(auth -> auth.getAuthority().equals("ROLE_USER"))) {
+            return postRepository.findByIsPrivate(false);
+        }else{
+            return postRepository.findAll();
+        }
     }
 
     public List<Post> getPublicPosts() {
