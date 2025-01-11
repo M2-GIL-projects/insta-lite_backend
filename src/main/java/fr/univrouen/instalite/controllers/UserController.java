@@ -4,7 +4,6 @@ import fr.univrouen.instalite.entities.Post;
 import fr.univrouen.instalite.entities.User;
 import fr.univrouen.instalite.services.PostService;
 import fr.univrouen.instalite.services.UserService;
-import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

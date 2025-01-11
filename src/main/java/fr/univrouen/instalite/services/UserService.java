@@ -61,6 +61,26 @@ public class UserService {
         return userRepository.save(existingUser);
     }
 
+
+    public User updateRoleUser(Long userId, String role) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || !authentication.isAuthenticated()) {
+            throw new SecurityException("Vous devez être connecté pour mettre à jour un utilisateur.");
+        }
+        User currentUser = (User) authentication.getPrincipal();
+        // On vérifie si l'utilisateur connecté est autorisé (admin)
+        if (!currentUser.getRole().equals("ADMIN")) {
+            throw new SecurityException("Vous n'avez pas le droit de réaliser cette action.");
+        }
+        User existingUser = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("Utilisateur introuvable avec l'ID : " + userId));
+        // Mise à jour des champs
+        if (currentUser.getRole().equals("ADMIN")) {
+            existingUser.setRole(role);
+        }
+        return userRepository.save(existingUser);
+    }
+
     public void deleteUser(Long userId) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || !authentication.isAuthenticated()) {

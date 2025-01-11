@@ -5,6 +5,7 @@ import fr.univrouen.instalite.exceptions.ResourceNotFoundException;
 import fr.univrouen.instalite.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,9 +17,14 @@ public class PostController {
     @Autowired
     private PostService postService;
 
+    @Autowired
+    private SimpMessagingTemplate messagingTemplate;
+
     @PostMapping
     public ResponseEntity<Post> createPost(@RequestBody Post post) {
         Post createdPost = postService.createPost(post);
+        // On diffuse le post créé à tous les abonnés
+        messagingTemplate.convertAndSend("/topic/posts", createdPost);
         return ResponseEntity.ok(createdPost);
     }
 
@@ -43,6 +49,8 @@ public class PostController {
     public ResponseEntity<?> deletePost(@PathVariable Long postId) {
         boolean deleted = postService.deletePost(postId);
         if (deleted) {
+            // On diffuse une notification de suppression de post
+            messagingTemplate.convertAndSend("/topic/posts", "Post supprimé : " + postId);
             return ResponseEntity.ok("Post supprimé avec succès");
         } else {
             throw new ResourceNotFoundException("Le post avec ID " + postId + " n'est pas trouvé.");
@@ -52,7 +60,12 @@ public class PostController {
     @PutMapping("/{postId}")
     public ResponseEntity<?> updatePost(@PathVariable Long postId, @RequestBody Post updatedPost) {
         Optional<Post> updated = postService.updatePost(postId, updatedPost);
-        return updated.map(ResponseEntity::ok)
-                .orElseThrow(() -> new ResourceNotFoundException("Le post avec l'ID " + postId + " n'a pas été trouvé."));
+        if (updated.isPresent()) {
+            // Diffusez le post mis à jour à tous les abonnés
+            messagingTemplate.convertAndSend("/topic/posts", updated.get());
+            return ResponseEntity.ok(updated.get());
+        } else {
+            throw new ResourceNotFoundException("Le post avec l'ID " + postId + " n'a pas été trouvé.");
+        }
     }
 }
