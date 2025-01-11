@@ -4,6 +4,7 @@ import fr.univrouen.instalite.entities.Comment;
 import fr.univrouen.instalite.services.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -14,6 +15,9 @@ public class CommentController {
 
     @Autowired
     private CommentService commentService;
+
+    @Autowired
+    private SimpMessagingTemplate messagingTemplate;
 
     // On ajoute un commentaire
     @PostMapping("/add/{postId}")

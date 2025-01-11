@@ -4,6 +4,7 @@ import fr.univrouen.instalite.entities.Post;
 import fr.univrouen.instalite.entities.User;
 import fr.univrouen.instalite.repositories.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -31,11 +32,11 @@ public class PostService {
     }
 
     public List<Post> getAllPosts() {
-        return postRepository.findAll();
+        return postRepository.findAll(Sort.by(Sort.Direction.DESC, "createdAt"));
     }
 
     public List<Post> getmyPosts(Long userId) {
-        return postRepository.findByUserId(userId);
+        return postRepository.findByUserId(userId, Sort.by(Sort.Direction.DESC, "createdAt"));
     }
 
     public List<Post> getPostsByUser(Long userId) {
@@ -47,7 +48,7 @@ public class PostService {
             return postRepository.findByIsPrivateAndUserId(false, userId);
         }else if(authentication.getAuthorities().stream().anyMatch(auth -> auth.getAuthority().equals("ROLE_PRIVILEGED_USER")) ||
                 authentication.getAuthorities().stream().anyMatch(auth -> auth.getAuthority().equals("ROLE_ADMIN"))){
-            return postRepository.findByUserId(userId);
+            return postRepository.findByUserId(userId, Sort.by(Sort.Direction.DESC, "createdAt"));
         }else{
             return postRepository.findByIsPrivateAndUserId(false, userId);
         }
@@ -55,18 +56,20 @@ public class PostService {
 
     public List<Post> getPostsByRole() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication == null || !authentication.isAuthenticated()) {
-            return postRepository.findByIsPrivate(false);
-        }
         if (authentication.getAuthorities().stream().anyMatch(auth -> auth.getAuthority().equals("ROLE_USER"))) {
-            return postRepository.findByIsPrivate(false);
+            return postRepository.findByIsPrivate(false, Sort.by(Sort.Direction.DESC, "createdAt"));
+        }else if(authentication.getAuthorities().stream().anyMatch(auth -> auth.getAuthority().equals("ROLE_PRIVILEGED_USER"))){
+            return postRepository.findAll(Sort.by(Sort.Direction.DESC, "createdAt"));
+        }else if(authentication.getAuthorities().stream().anyMatch(auth -> auth.getAuthority().equals("ROLE_ADMIN"))){
+            return postRepository.findAll(Sort.by(Sort.Direction.DESC, "createdAt"));
         }else{
-            return postRepository.findAll();
+            return postRepository.findByIsPrivate(false, Sort.by(Sort.Direction.DESC, "createdAt"));
         }
+
     }
 
     public List<Post> getPublicPosts() {
-        return postRepository.findByIsPrivate(false);
+        return postRepository.findByIsPrivate(false, Sort.by(Sort.Direction.DESC, "createdAt"));
     }
 
     public Optional<Post> getPostById(Long postId) {
