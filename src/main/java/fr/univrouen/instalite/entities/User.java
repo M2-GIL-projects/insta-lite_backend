@@ -2,6 +2,7 @@ package fr.univrouen.instalite.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
@@ -30,6 +31,7 @@ public class User implements UserDetails {
     @JsonIgnore
     private String password;
 
+    @Email(message = "Email invalide")
     @Column(unique = true, length = 100, nullable = false)
     private String email;
 
