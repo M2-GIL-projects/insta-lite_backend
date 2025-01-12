@@ -35,6 +35,14 @@ public class VideoPostController {
         return ResponseEntity.ok().contentType(MediaType.APPLICATION_OCTET_STREAM).body(fileData);
     }
 
+    @PutMapping("/update/{videoId}")
+    @Transactional
+    public ResponseEntity<?> updateVideo(@PathVariable Long videoId,
+                                         @RequestParam("file") MultipartFile file, boolean isPrivate) throws IOException {
+        Video video = videoService.updateVideo(videoId, file, isPrivate);
+        return ResponseEntity.status(HttpStatus.CREATED).body(video);
+    }
+
     // On supprime la video par son ID
     @DeleteMapping("/{id}")
     @Transactional
