@@ -1,6 +1,8 @@
 package fr.univrouen.instalite.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
@@ -19,17 +21,31 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String fullName;
 
+    @Column(nullable = true)
+    private String pseudo;
+
     @Column(nullable = false)
+    @JsonIgnore
     private String password;
 
+    @Email(message = "Email invalide")
     @Column(unique = true, length = 100, nullable = false)
     private String email;
 
     @Column(nullable = false)
     private String role;
+
+    @Column(nullable = true)
+    private String photo;
+
+    @Column(nullable = true)
+    private String tel;
+
+    @Column(nullable = true)
+    private String bio;
 
     @CreationTimestamp
     @Column(updatable = false, name = "created_at")
@@ -43,10 +59,19 @@ public class User implements UserDetails {
 
     public User() {}
 
-    public User(String fullName, String password, String email, String role) {
+    public User(String pseudo, String password, String email, String role) {
+        this.pseudo = pseudo;
+        this.password = password;
+        this.email = email;
+        this.role = role;
+    }
+
+
+    public User(String fullName, String password, String email, String pseudo, String role) {
         this.fullName = fullName;
         this.password = password;
         this.email = email;
+        this.pseudo = pseudo;
         this.role = role;
     }
 
@@ -104,6 +129,15 @@ public class User implements UserDetails {
         return this;
     }
 
+    public String getPseudo() {
+        return pseudo;
+    }
+
+    public User setPseudo(String pseudo) {
+        this.pseudo = pseudo;
+        return this;
+    }
+
     public String getRole() {
         return role;
     }
@@ -111,6 +145,10 @@ public class User implements UserDetails {
     public User setRole(String role) {
         this.role = role;
         return this;
+    }
+
+    public String getFullName() {
+        return fullName;
     }
 
     public User setFullName(String fullName) {
@@ -122,4 +160,29 @@ public class User implements UserDetails {
         this.password = password;
         return this;
     }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+
+    public String getTel() {
+        return tel;
+    }
+
+    public void setTel(String tel) {
+        this.tel = tel;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
+
 }

@@ -2,13 +2,19 @@ package fr.univrouen.instalite.exceptions;
 
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.security.SignatureException;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ProblemDetail;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AccountStatusException;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -16,7 +22,6 @@ public class GlobalExceptionHandler {
     public ProblemDetail handleSecurityException(Exception exception) {
         ProblemDetail errorDetail = null;
 
-        // TODO send this stack trace to an observability tool
         exception.printStackTrace();
 
         if (exception instanceof BadCredentialsException) {
@@ -36,6 +41,11 @@ public class GlobalExceptionHandler {
             errorDetail.setProperty("description", "Vous n'êtes pas autorisé à accéder à cette ressource");
         }
 
+        if (exception instanceof SecurityException) {
+            errorDetail = ProblemDetail.forStatusAndDetail(HttpStatusCode.valueOf(403), exception.getMessage());
+            errorDetail.setProperty("description", "Vous n'êtes pas autorisé à réaliser cette action");
+        }
+
         if (exception instanceof SignatureException) {
             errorDetail = ProblemDetail.forStatusAndDetail(HttpStatusCode.valueOf(403), exception.getMessage());
             errorDetail.setProperty("description", "La signature du JWT est invalide");
@@ -46,9 +56,30 @@ public class GlobalExceptionHandler {
             errorDetail.setProperty("description", "Le jeton JWT a expiré");
         }
 
+        if (exception instanceof ResourceNotFoundException) {
+            errorDetail = ProblemDetail.forStatusAndDetail(HttpStatusCode.valueOf(404), exception.getMessage());
+            errorDetail.setProperty("description", "Ressource non trouvée");
+        }
+
+        if (exception instanceof ConstraintViolationException validationException) {
+            Map<String, String> validationErrors = new HashMap<>();
+            // Collecte des erreurs de validation
+            for (ConstraintViolation<?> violation : validationException.getConstraintViolations()) {
+                String field = violation.getPropertyPath().toString();
+                String message = violation.getMessage();
+                validationErrors.put(field, message);
+            }
+            // Création du problème de détail
+            errorDetail = ProblemDetail.forStatusAndDetail(HttpStatusCode.valueOf(400), "Erreur de validation des champs");
+            errorDetail.setProperty("description", "Certains champs ne respectent pas les contraintes de validation");
+            errorDetail.setProperty("validationErrors", validationErrors);
+
+            return errorDetail;
+        }
+
         if (errorDetail == null) {
             errorDetail = ProblemDetail.forStatusAndDetail(HttpStatusCode.valueOf(500), exception.getMessage());
-            errorDetail.setProperty("description", "Unknown internal server error.");
+            errorDetail.setProperty("description", "Erreur interne du serveur (inconnu).");
         }
 
         return errorDetail;

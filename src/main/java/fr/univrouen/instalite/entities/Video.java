@@ -7,13 +7,18 @@ import org.hibernate.annotations.CreationTimestamp;
 import java.util.Date;
 
 @Entity
-public class Picture {
+@Table(name = "videos")
+public class Video {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
     private String url;
+
+    @Column(nullable = true)
+    private String thumbnail;
 
     @Column(nullable = true)
     private String extension;
@@ -30,6 +35,15 @@ public class Picture {
     @Column(updatable = false, name = "created_at")
     private Date createdAt;
 
+    // Constructeurs, Getters, Setters
+
+    public Video() {}
+
+    public Video(String url, Post post) {
+        this.url = url;
+        this.post = post;
+    }
+
     public Long getId() {
         return id;
     }
@@ -44,6 +58,14 @@ public class Picture {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
     }
 
     public String getExtension() {
@@ -65,5 +87,5 @@ public class Picture {
     public void setPost(Post post) {
         this.post = post;
     }
-
 }
+

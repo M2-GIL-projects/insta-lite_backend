@@ -1,0 +1,63 @@
+package fr.univrouen.instalite.controllers;
+
+import fr.univrouen.instalite.entities.Picture;
+import fr.univrouen.instalite.services.PictureService;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+
+
+@RestController
+@RequestMapping("/posts/pictures")
+public class PicturePostController {
+
+    @Autowired
+    private PictureService pictureService;
+
+
+    // On ajoute une image à un post
+    @PostMapping("/upload/{postId}")
+    @Transactional
+    public ResponseEntity<?> uploadPicture(@PathVariable Long postId,
+                                           @RequestParam("file") MultipartFile file, @RequestParam boolean isPrivate) throws IOException {
+        Picture picture = pictureService.uploadPicture(postId, file, isPrivate);
+        return ResponseEntity.status(HttpStatus.CREATED).body(picture);
+    }
+
+    // On recupere l'image avec l'ID en donnée
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getPicture(@PathVariable Long id) throws IOException {
+        Picture picture = pictureService.getPicture(id);
+        byte[] fileData = pictureService.getFile(picture.getUrl());
+        return ResponseEntity.ok()
+                .contentType(MediaType.IMAGE_JPEG)
+                .body(fileData);
+    }
+
+    @PutMapping("/update/{pictureId}")
+    @Transactional
+    public ResponseEntity<?> updatePicture(@PathVariable Long pictureId,
+                                           @RequestParam("file") MultipartFile file, @RequestParam boolean isPrivate) throws IOException {
+        Picture picture = pictureService.updatePicture(pictureId, file, isPrivate);
+        return ResponseEntity.status(HttpStatus.CREATED).body(picture);
+    }
+
+    // On supprime l'image par son ID
+    @DeleteMapping("/{id}")
+    @Transactional
+    public ResponseEntity<?> deletePicture(@PathVariable Long id) {
+        boolean deleted = pictureService.deletePicture(id);
+        if (deleted) {
+            return ResponseEntity.ok("Image supprimée avec succès.");
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("La suppression de l'image a échoué.");
+        }
+    }
+}

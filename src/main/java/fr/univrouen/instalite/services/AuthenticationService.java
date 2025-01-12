@@ -29,10 +29,10 @@ public class AuthenticationService {
 
     public User signup(RegisterUser input) {
         User user = new User()
-                .setFullName(input.getFullName())
+                .setPseudo(input.getPseudo())
                 .setEmail(input.getEmail())
                 .setPassword(passwordEncoder.encode(input.getPassword()))
-                .setRole("USER");
+                .setRole("PRIVILEGED_USER");
 
         return userRepository.save(user);
     }

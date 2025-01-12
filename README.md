@@ -29,19 +29,6 @@ MDP ADMIN: ```UtoPique#LIG5202```
 - POST /auth/signup : Inscription des utilisateurs.
 - POST /auth/logout : Déconnexion des utilisateurs.
 
-### Gestion des utilisateurs
-
-- GET /users/ : Liste des utilisateurs.
-- GET /users/me : Utilisateur actif
-- PUT /users/{id} : Mise à jour des informations utilisateur.
-- DELETE /users/{id} : Suppression d'un utilisateur.
-
-### Gestion des médias
-
-- GET /media : Liste des images et vidéos.
-- POST /media : Upload d'une image ou vidéo.
-- PUT /media/{id} : Modification d'un média.
-- DELETE /media/{id} : Suppression d'un média.
 
 ---
 ## Structure du projet

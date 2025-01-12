@@ -18,7 +18,7 @@ public class DataInitializer {
     public void init() {
         // Vérifier si un utilisateur par défaut existe déjà
         if (userRepository.count() == 0) {
-            User newUser = new User("Admin User", "$2a$10$aSI8gm7ytHJE6cx6.voA6.AIYmcRpwI.977Gc7wiMdeQgwu/6ssRq", "admin@instalite.fr", "ADMIN");
+            User newUser = new User("Admin User","$2a$10$aSI8gm7ytHJE6cx6.voA6.AIYmcRpwI.977Gc7wiMdeQgwu/6ssRq", "admin@instalite.fr", "admin_user", "ADMIN");
             userRepository.save(newUser);
         }
     }

@@ -65,6 +65,63 @@
 			"response": []
 		},
 		{
+			"name": "Login Admin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"admin@instalite.fr\",\n    \"password\": \"UtoPique#LIG5202\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/auth/login",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"auth",
+						"login"
+					]
+				},
+				"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+			},
+			"response": []
+		},
+		{
 			"name": "Acceuil",
 			"request": {
 				"auth": {
@@ -72,7 +129,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huLmRvZUBnbWFpbC5jb20iLCJpYXQiOjE3MzU3NjI1MDksImV4cCI6MTczNTc2NjEwOX0.SBzozO2-NnwD7_56ykvbNAPyIzHtpkM88Fjaj9CWkfw",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huLmRvZUBnbWFpbC5jb20iLCJpYXQiOjE3MzYzODU3MTQsImV4cCI6MTczNjM4OTMxNH0.KDnnTpEuGyFosYAjEGlJTooTFKTA6FPjQwZQPJ_LTK0",
 							"type": "string"
 						}
 					]
@@ -92,13 +149,58 @@
 			"response": []
 		},
 		{
+			"name": "Acceuil Admin",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbkBpbnN0YWxpdGUuZnIiLCJpYXQiOjE3MzY0NTI3MDAsImV4cCI6MTczNjQ1NjMwMH0.QSpBDoi7EyrdiJzwWB6TNz3_GAg2bjvLJ5MAaD_bqNE",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/admin/dashboard",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"admin",
+						"dashboard"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Public",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/public",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"public"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Registration",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"email\": \"john.doe@gmail.com\",\n    \"password\": \"passer\",\n    \"fullName\": \"John DOE\"\n}",
+					"raw": "{\n    \"email\": \"john.doe@gmail.com\",\n    \"password\": \"passer\",\n    \"pseudo\": \"John_DOE\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -113,6 +215,43 @@
 					"path": [
 						"auth",
 						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Edit User",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huLmRvZUBnbWFpbC5jb20iLCJpYXQiOjE3MzYzMDM5MzIsImV4cCI6MTczNjMwNzUzMn0.wihLm0WgEAWXKNJQjHWYEsN3XiE-66xokKgD_cJPGcs",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"profileImg\":\"miky_picture\",\n    \"fullName\": \"Doe User\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/users/2",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"users",
+						"2"
 					]
 				}
 			},
@@ -154,7 +293,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huLmRvZUBnbWFpbC5jb20iLCJpYXQiOjE3MzU3NjA0NTIsImV4cCI6MTczNTc2NDA1Mn0.S17zzUFjT7x5bmGtQbAbR-c9JI5x_PaLbxf3CklQMik",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huLmRvZUBnbWFpbC5jb20iLCJpYXQiOjE3MzYzMDM2MDMsImV4cCI6MTczNjMwNzIwM30.U2PcCeg2oNUHjwK91aVnCNnUp1W1FsUgH8Ij_DSarW0",
 							"type": "string"
 						}
 					]
@@ -162,13 +301,12 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{base_url}}/users/",
+					"raw": "{{base_url}}/users",
 					"host": [
 						"{{base_url}}"
 					],
 					"path": [
-						"users",
-						""
+						"users"
 					]
 				}
 			},
@@ -182,7 +320,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huLmRvZUBnbWFpbC5jb20iLCJpYXQiOjE3MzU3NjA0NTIsImV4cCI6MTczNTc2NDA1Mn0.S17zzUFjT7x5bmGtQbAbR-c9JI5x_PaLbxf3CklQMik",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huLmRvZUBnbWFpbC5jb20iLCJpYXQiOjE3MzYzMDM5MzIsImV4cCI6MTczNjMwNzUzMn0.wihLm0WgEAWXKNJQjHWYEsN3XiE-66xokKgD_cJPGcs",
 							"type": "string"
 						}
 					]
@@ -197,6 +335,581 @@
 					"path": [
 						"users",
 						"me"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Mon portfolio",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huLmRvZUBnbWFpbC5jb20iLCJpYXQiOjE3MzYzMDM5MzIsImV4cCI6MTczNjMwNzUzMn0.wihLm0WgEAWXKNJQjHWYEsN3XiE-66xokKgD_cJPGcs",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/users/me/portfolio",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"users",
+						"me",
+						"portfolio"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Posts",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huLmRvZUBnbWFpbC5jb20iLCJpYXQiOjE3MzYxOTQwMTYsImV4cCI6MTczNjE5NzYxNn0.8V9Rz1rZpRiEBHLber8_iZd2Pb9d9ym89x6FH_LHQ8E",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/posts",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"posts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Post Public",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huLmRvZUBnbWFpbC5jb20iLCJpYXQiOjE3MzYzODE0NzcsImV4cCI6MTczNjM4NTA3N30.-ZirGGhhWYyiMAThL3uLFEo0gDX3Gx_X41aw-QT1KZY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"content\": \"Ma story life\",\n  \"private\": false\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/posts",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"posts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Post Private",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huLmRvZUBnbWFpbC5jb20iLCJpYXQiOjE3MzYzODE0NzcsImV4cCI6MTczNjM4NTA3N30.-ZirGGhhWYyiMAThL3uLFEo0gDX3Gx_X41aw-QT1KZY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"content\": \"Ma story life.\",\n  \"private\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/posts",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"posts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post d'un User",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huLmRvZUBnbWFpbC5jb20iLCJpYXQiOjE3MzYzODU3MTQsImV4cCI6MTczNjM4OTMxNH0.KDnnTpEuGyFosYAjEGlJTooTFKTA6FPjQwZQPJ_LTK0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/posts/user/2",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"posts",
+						"user",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Post",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huLmRvZUBnbWFpbC5jb20iLCJpYXQiOjE3MzYxODI1MzUsImV4cCI6MTczNjE4NjEzNX0.7eF0HYzeHIelNE3MUgqJZm3wO26DboFQhSyOPx4Hywc",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/posts/1",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"posts",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Post",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huLmRvZUBnbWFpbC5jb20iLCJpYXQiOjE3MzYyOTY5OTgsImV4cCI6MTczNjMwMDU5OH0.mA2bLpE6XmYssJjE2f5hQQiD8ZILPawueilaIFj6-SM",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/posts/4",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"posts",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post Video",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huLmRvZUBnbWFpbC5jb20iLCJpYXQiOjE3MzYzMDM5MzIsImV4cCI6MTczNjMwNzUzMn0.wihLm0WgEAWXKNJQjHWYEsN3XiE-66xokKgD_cJPGcs",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/home/michel/Documents/M2-Rouen/UE-JEE/Big_Buck.mp4"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/posts/videos/upload/1",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"posts",
+						"videos",
+						"upload",
+						"1"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null,
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Video",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huLmRvZUBnbWFpbC5jb20iLCJpYXQiOjE3MzYyOTI5MTcsImV4cCI6MTczNjI5NjUxN30.mgYa-CxFmdfhZWoZvBZrRhVpKgk6-qNR4z4pszSNyJ8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/posts/videos/1",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"posts",
+						"videos",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Video",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huLmRvZUBnbWFpbC5jb20iLCJpYXQiOjE3MzYyOTI5MTcsImV4cCI6MTczNjI5NjUxN30.mgYa-CxFmdfhZWoZvBZrRhVpKgk6-qNR4z4pszSNyJ8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/posts/videos/2",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"posts",
+						"videos",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Image",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huLmRvZUBnbWFpbC5jb20iLCJpYXQiOjE3MzYzODU3MTQsImV4cCI6MTczNjM4OTMxNH0.KDnnTpEuGyFosYAjEGlJTooTFKTA6FPjQwZQPJ_LTK0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/home/michel/Téléchargements/alexander-zaytsev-37PDEbTnT34-unsplash.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/posts/pictures/upload/1",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"posts",
+						"pictures",
+						"upload",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Image",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huLmRvZUBnbWFpbC5jb20iLCJpYXQiOjE3MzYzODU3MTQsImV4cCI6MTczNjM4OTMxNH0.KDnnTpEuGyFosYAjEGlJTooTFKTA6FPjQwZQPJ_LTK0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/posts/pictures/1",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"posts",
+						"pictures",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Image",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huLmRvZUBnbWFpbC5jb20iLCJpYXQiOjE3MzYzODU3MTQsImV4cCI6MTczNjM4OTMxNH0.KDnnTpEuGyFosYAjEGlJTooTFKTA6FPjQwZQPJ_LTK0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/posts/pictures/1",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"posts",
+						"pictures",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add comment",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huLmRvZUBnbWFpbC5jb20iLCJpYXQiOjE3MzYzMDM5MzIsImV4cCI6MTczNjMwNzUzMn0.wihLm0WgEAWXKNJQjHWYEsN3XiE-66xokKgD_cJPGcs",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "Faux gars boy",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/comments/add/1",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"comments",
+						"add",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Comment",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huLmRvZUBnbWFpbC5jb20iLCJpYXQiOjE3MzYyOTI5MTcsImV4cCI6MTczNjI5NjUxN30.mgYa-CxFmdfhZWoZvBZrRhVpKgk6-qNR4z4pszSNyJ8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "Joli Video",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/comments/1",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"comments",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Comment",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huLmRvZUBnbWFpbC5jb20iLCJpYXQiOjE3MzYyOTI5MTcsImV4cCI6MTczNjI5NjUxN30.mgYa-CxFmdfhZWoZvBZrRhVpKgk6-qNR4z4pszSNyJ8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/comments/2",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"comments",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Like",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huLmRvZUBnbWFpbC5jb20iLCJpYXQiOjE3MzYzMDM5MzIsImV4cCI6MTczNjMwNzUzMn0.wihLm0WgEAWXKNJQjHWYEsN3XiE-66xokKgD_cJPGcs",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/likes/1",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"likes",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Like",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb2huLmRvZUBnbWFpbC5jb20iLCJpYXQiOjE3MzYyOTI5MTcsImV4cCI6MTczNjI5NjUxN30.mgYa-CxFmdfhZWoZvBZrRhVpKgk6-qNR4z4pszSNyJ8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/likes/2",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"likes",
+						"2"
 					]
 				}
 			},

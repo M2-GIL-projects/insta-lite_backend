@@ -14,6 +14,10 @@ RUN mvn clean package -DskipTests
 FROM tomcat:10-jdk17
 WORKDIR /usr/local/tomcat/webapps/
 
+# Installer ffmpeg et ffprobe
+#RUN apt-get update && apt-get install -y ffmpeg && rm -rf /var/lib/apt/lists/*
+
+
 # Copier le WAR généré dans le répertoire webapps de Tomcat
 COPY --from=build /app/target/*.war /usr/local/tomcat/webapps/ROOT.war
 
