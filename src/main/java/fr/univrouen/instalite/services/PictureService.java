@@ -88,6 +88,20 @@ public class PictureService {
         return pictureOptional.get();
     }
 
+    public Picture updatePicture(Long id, MultipartFile file, boolean isPrivate) throws IOException {
+        Optional<Picture> pictureOptional = findById(id);
+        if (pictureOptional.isEmpty()) {
+            throw new ResourceNotFoundException("L'image avec l'ID " + id + " n'a pas été trouvée.");
+        }
+        Picture picture = pictureOptional.get();
+        storageUtil.deleteFile(picture.getUrl());
+        String path = storageUtil.createPicture(file);
+        picture.setUrl(path);
+        picture.setExtension(FilenameUtils.getExtension(picture.getUrl()));
+        picture.setPrivate(isPrivate);
+        return pictureRepository.save(picture);
+    }
+
     public boolean deletePicture(Long id) {
         Optional<Picture> pictureOptional = findById(id);
         if (pictureOptional.isEmpty()) {

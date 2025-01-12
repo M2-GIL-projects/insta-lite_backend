@@ -41,6 +41,14 @@ public class PicturePostController {
                 .body(fileData);
     }
 
+    @PutMapping("/update/{pictureId}")
+    @Transactional
+    public ResponseEntity<?> updatePicture(@PathVariable Long pictureId,
+                                           @RequestParam("file") MultipartFile file, @RequestParam boolean isPrivate) throws IOException {
+        Picture picture = pictureService.updatePicture(pictureId, file, isPrivate);
+        return ResponseEntity.status(HttpStatus.CREATED).body(picture);
+    }
+
     // On supprime l'image par son ID
     @DeleteMapping("/{id}")
     @Transactional

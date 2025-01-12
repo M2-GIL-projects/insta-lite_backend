@@ -82,12 +82,25 @@ public class VideoService {
         return videoOptional.get();
     }
 
+    public Video updateVideo(Long id, MultipartFile file, boolean isPrivate) throws IOException {
+        Optional<Video> videoOpt = findById(id);
+        if (videoOpt.isEmpty()) {
+            throw new ResourceNotFoundException("La video avec l'ID " + id + " n'a pas été trouvé.");
+        }
+        Video video = videoOpt.get();
+        storageUtil.deleteFile(video.getUrl());
+        String path = storageUtil.createVideo(file);
+        video.setUrl(path);
+        video.setExtension(FilenameUtils.getExtension(video.getUrl()));
+        video.setPrivate(isPrivate);
+        return videoRepository.save(video);
+    }
+
     public boolean deleteVideo(Long id) {
         Optional<Video> videoOpt = findById(id);
         if (videoOpt.isEmpty()) {
             throw new ResourceNotFoundException("La video avec l'ID " + id + " n'a pas été trouvé.");
         }
-
         Video video = videoOpt.get();
         return deleteFile(video.getUrl(), id);
     }

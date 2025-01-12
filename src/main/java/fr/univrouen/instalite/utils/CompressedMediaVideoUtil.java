@@ -21,12 +21,12 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class CompressedMediaVideoUtil {
 
-    private FFmpeg ffmpeg;
-    private FFprobe ffprobe;
-
-    @Value("${app.upload.dir}")
-    private String uploadDir;
-
+//    private FFmpeg ffmpeg;
+//    private FFprobe ffprobe;
+//
+//    @Value("${app.upload.dir}")
+//    private String uploadDir;
+//
 //    public CompressedMediaVideoUtil(
 //            @Value("${server.compression.ffmpeg}") String ffmpegPath,
 //            @Value("${server.compression.ffprobe}") String ffprobePath) throws IOException {
